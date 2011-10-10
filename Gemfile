@@ -1,3 +1,5 @@
 source :rubygems
 
-gem 'unicorn'
+gem 'rack'
+gem 'redis'
+gem 'twitter'
