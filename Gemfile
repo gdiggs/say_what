@@ -1,5 +1,5 @@
 source :rubygems
 
 gem 'rack'
-gem 'redis'
+#gem 'redis'
 gem 'twitter'
