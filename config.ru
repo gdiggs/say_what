@@ -20,6 +20,16 @@ end
 
 run SayWhat.new
 
+# Authenticate Twitter user
+Twitter.configure do |config|
+  config.consumer_key = ENV['CONSUMER_KEY']
+  config.consumer_secret = ENV['CONSUMER_SECRET']
+  config.oauth_token = ENV['OAUTH_TOKEN']
+  config.oauth_token_secret = ENV['OAUTH_TOKEN_SECRET']
+end
+
+Twitter.user
+
 # Create background thread to parse twitter feed and push to redis
 Thread.new {
   last_id = 0 # start by getting latest tweets
@@ -39,6 +49,7 @@ Thread.new {
 
       results.each do |result|
         puts "@#{result.from_user}: #{result.text} - #{TwitterHelper.link(result)}"
+        Twitter.retweet(result.id) # retweet from the authenticated user
       end
 
       last_id = results.first.id # update with the new last id
